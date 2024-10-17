@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HandleLikeController;
 use App\Http\Controllers\HomePageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -83,13 +84,17 @@ Route::get('/dusscusstion',[DiscussionController::class,'index'])->name('discus.
 Route::get('/threadlist/{id}',[DiscussionController::class,'threadlist'])->name('discus.threadlist')->whereNumber('id');
 Route::post('/questionPost/{id}',[DiscussionController::class,'storequestion'])->name('discus.storequestion')->whereNumber('id');
 Route::post('/questionEdit/{id}',[DiscussionController::class,'updateQuestion'])->name('discus.updateQuestion')->whereNumber('id');
-
 Route::post('/deleteQuestion/{catId}/{threadId}',[DiscussionController::class,'threadDelete'])->name('threadDelete');
 
 
 Route::get('/comment/{id}',[CommentController::class,'index'])->name('discus.comment');
+Route::post('/comment/{id}',[CommentController::class,'store'])->name('comment.store');
+Route::post('/comment/{id}/update',[CommentController::class,'update'])->name('comment.update');
+Route::post('/comment/{id}/delete',[CommentController::class,'delete'])->name('comment.delete');
 
 Route::get('/',[HomePageController::class,'index'])->name('home');
+
+Route::post('/like/{id}',[HandleLikeController::class,'store'])->name('like.add');
 
 
 

@@ -93,7 +93,7 @@
                 <div class="media-body">
                     <div class="d-flex justify-content-between">
                         <p>{{ $thread->user->email }}</p>
-                        <p><span>time: {{ date('d-m-Y , h:ia',strtotime($thread->created_at)) }}</span></p>
+                        <p><span> {{ date('d-m-Y , h:ia',strtotime($thread->created_at)) }}</span></p>
                     </div>
 
                     <div>
@@ -140,7 +140,7 @@
                 <input type="text" name="eidt_title" class="form-control mb-3" value="${title}">
                 <textarea name="edit_Description" class="form-control mb-3"  >${description}</textarea>
                 <button class="btn btn-primary" onclick="updateThread.call(this,${threadId})" commentLink="${commentLink}" threadId=${threadId}>Update</button>
-                <button class="btn btn-success" onclick="cancleEdit.call(this)" commentLink="${commentLink}" threadId=${threadId}>Cancle</button>
+                <button class="btn btn-success" onclick="cancleEdit.call(this,'${title}')" commentLink="${commentLink}" threadId=${threadId}>Cancle</button>
             `
         }
 
@@ -163,30 +163,25 @@
         
 
         function editThread(){
-            console.log('call hosce')
+           
             let a = $(this).parent().parent().children()[0];
-            let value = a.innerHTML;
+            let title = a.innerHTML;
             let commentLink = a.href;
             let threadId = $(this).attr('q_id');
-            let p = $(this).parent().parent().children()[1].innerHTML;
-            $(this).parent().parent().html(editFromOnClick(value,p,commentLink,threadId)) 
+            let description = $(this).parent().parent().children()[1].innerHTML;
+            $(this).parent().parent().html(editFromOnClick(title,description,commentLink,threadId)) 
         }
 
-        function cancleEdit(){
-
+        function cancleEdit(title){
             let sibling = $(this).siblings();
-            let title =sibling[0].value
             let description =sibling[1].innerHTML;
-
+            //threadId and comment in cancle button as attribute
             let commentLink = $(this).attr('commentLink')
             let threadId = $(this).attr('threadId')
+            
             let deleteLink = "{{ route('threadDelete',['catId'=>$catagory->id,'threadId'=>'ID'])}}";
             deleteLink =deleteLink.replace('ID',threadId);
-
-           
             $(this).parent().html(cardbody(commentLink,title,description,threadId,deleteLink))
-           
-            
         }
 
 
@@ -218,7 +213,7 @@
                 success:function(res){
                     if(res.success){
                         updatebtn.parent().html(cardbody(commentLink,res.data.title,res.data.description,threadId,deleteLink))
-                        // console.log('asce to');
+                       
                     }
                 },
                 error:function(jqXHR,exception){
@@ -229,18 +224,7 @@
             })
 
 
-            // $.ajax({
-            // url:url,
-            // type:"post",
-            // data:ob,
-            // dataType:"json",
-            // success:function(res){
-            //     console.log('aslslkdk')
-            // },
-            // error:function(jqXHR,exception){
-
-            // }
-            // })
+           
 
 
 

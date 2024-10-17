@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Comment;
 use Request;
 use App\Models\User;
 use App\Models\Thread;
@@ -27,6 +28,13 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('threadEditDelete',function(User $user,Thread $ob){
             return $ob->user_id == $user->id;
+        });
+
+        Gate::define('commentEditDelete',function(User $user,Comment $ob){
+            return $ob->user_id == $user->id;
+        });
+        Gate::define('commentLike',function(User $user,Comment $ob){
+            return $ob->user_id != $user->id;
         });
 
 
