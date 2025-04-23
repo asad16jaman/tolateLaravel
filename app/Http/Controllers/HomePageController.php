@@ -8,6 +8,19 @@ class HomePageController extends Controller
 {
     //
     function index(){
-        return view('welcome');
+        return view('index');
     }
+
+    function about(){
+        return view('about');
+    }
+
+    function contact(){
+        return view('contact');
+    }
+
+
+    
+
+
 }

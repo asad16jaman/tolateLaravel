@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+@include('front.nav')
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -26,7 +27,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label">Email</label>
-                                        <input type="email" name='email' class="form-control @error('email') is-invalid @enderror" placeholder="inter Email" aria-label="Email" value='{{ old('email') }}'>
+                                        <input type="email" name='email' class="form-control @error('email') is-invalid @enderror" placeholder="enter Email" aria-label="Email" value='{{ old('email') }}'>
                                         @error('email')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                         @enderror
@@ -72,4 +73,5 @@
             </div>
         </div>
     </div>
+    @include('front.footer')
 @endsection

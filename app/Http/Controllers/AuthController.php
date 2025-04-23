@@ -45,7 +45,7 @@ class AuthController extends Controller
 
         if(Auth::attempt(['email' => $request->email,'password' => $request->password],$request->remembar?true:false)){
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('/prorile');
         }
         return back()->with('error','credintial not match');
        

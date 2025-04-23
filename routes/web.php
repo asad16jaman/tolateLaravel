@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\HandleLikeController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\HouseController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\CatagoryController;
-use App\Http\Controllers\DiscussionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,46 +54,39 @@ Route::middleware('auth')->group(function(){
     
     Route::post('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
-     
         return back()->with('message', 'Verification link sent!');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-
-    // admin routing section
-
-Route::get('/catagory', [CatagoryController::class,'index'])->name('catagory_index');
-Route::get('/catagory/create', [CatagoryController::class,'create'])->name('catagory_create');
-Route::post('/catagory/store', [CatagoryController::class,'store'])->name('catagory_store');
-Route::get('/catagory/{id}/edit', [CatagoryController::class,'edit'])->name('catagory_edit');
-Route::post('/catagory/{id}/edit', [CatagoryController::class,'update'])->name('catagory_update');
-Route::get('/catagory/{id}/delete', [CatagoryController::class,'delete'])->name('catagory_delete');
-
-
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+
+
+    //-------------------------
+    Route::get("/profile", [ProfileController::class,'index'])->name('profile');
+    Route::post("/profile", [ProfileController::class,'updateProfile'])->name('profile');
+    Route::get("profile/houses/", [ProfileController::class,'showHouse'])->name('profile.house');
+    Route::get("profile/house/create", [ProfileController::class,'contact'])->name('profile.house.create');
+    Route::post("profile/house/create", [ProfileController::class,'houseStore'])->name('profile.house.store');
+
+
+
+
+
+
+
+
+
+
 });
 
 
-
-
-
-
-// front routing section
-
-Route::get('/dusscusstion',[DiscussionController::class,'index'])->name('discus.index');
-Route::get('/threadlist/{id}',[DiscussionController::class,'threadlist'])->name('discus.threadlist')->whereNumber('id');
-Route::post('/questionPost/{id}',[DiscussionController::class,'storequestion'])->name('discus.storequestion')->whereNumber('id');
-Route::post('/questionEdit/{id}',[DiscussionController::class,'updateQuestion'])->name('discus.updateQuestion')->whereNumber('id');
-Route::post('/deleteQuestion/{catId}/{threadId}',[DiscussionController::class,'threadDelete'])->name('threadDelete');
-
-
-Route::get('/comment/{id}',[CommentController::class,'index'])->name('discus.comment');
-Route::post('/comment/{id}',[CommentController::class,'store'])->name('comment.store');
-Route::post('/comment/{id}/update',[CommentController::class,'update'])->name('comment.update');
-Route::post('/comment/{id}/delete',[CommentController::class,'delete'])->name('comment.delete');
-
 Route::get('/',[HomePageController::class,'index'])->name('home');
+Route::get('/about',[HomePageController::class,'about'])->name('aboutUs');
+Route::get('/contact',[HomePageController::class,'contact'])->name('contactUs');
 
-Route::post('/like/{id}',[HandleLikeController::class,'store'])->name('like.add');
+Route::resource('/houses',HouseController::class);
+
+Route::get('/house',[HouseController::class,"getHouse"])->name('housedetail');
+
 
 
 
