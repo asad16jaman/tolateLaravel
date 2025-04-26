@@ -10,23 +10,18 @@
             <a class="nav-link me-2 " href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-2" href="{{ route('houses.index') }}">Familly Houses</a>
+            <a class="nav-link me-2" href="{{ route('houses.index',['type' => "family"]) }}">Familly Houses</a>
           </li>
           <li class="nav-item">
-            
-
             <div class="btn-group">
                   <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Single Houses
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('houses.index') }}">Boys</a></li>
-                    <li><a class="dropdown-item" href="{{ route('houses.index') }}">Girls</a></li>
-                  
+                    <li><a class="dropdown-item" href="{{ route('houses.index',['type' => 'boys']) }}">Boys</a></li>
+                    <li><a class="dropdown-item" href="{{ route('houses.index', ['type'=> 'girls']) }}">Girls</a></li>
                   </ul>
             </div>
-
-
           </li>
           <li class="nav-item">
             <a class="nav-link me-2" href="{{ route('contactUs') }}">Contact us</a>

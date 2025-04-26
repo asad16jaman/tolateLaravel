@@ -38,6 +38,11 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<string, string>
      */
+
+    function profile(){
+        return $this->hasOne(Profile::class);
+    }
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',

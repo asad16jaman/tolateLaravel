@@ -10,4 +10,12 @@ class House extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+
+    function user(){
+        return $this->belongsTo(User::class);
+    }
+
+
+
 }

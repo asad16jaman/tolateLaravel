@@ -67,15 +67,6 @@ Route::middleware('auth')->group(function(){
     Route::get("profile/house/create", [ProfileController::class,'contact'])->name('profile.house.create');
     Route::post("profile/house/create", [ProfileController::class,'houseStore'])->name('profile.house.store');
 
-
-
-
-
-
-
-
-
-
 });
 
 
@@ -83,9 +74,12 @@ Route::get('/',[HomePageController::class,'index'])->name('home');
 Route::get('/about',[HomePageController::class,'about'])->name('aboutUs');
 Route::get('/contact',[HomePageController::class,'contact'])->name('contactUs');
 
-Route::resource('/houses',HouseController::class);
+Route::get('/houses/{type?}',[HouseController::class,"index"])->name('houses.index');
 
-Route::get('/house',[HouseController::class,"getHouse"])->name('housedetail');
+Route::get('/house/{id}',[HouseController::class,"getHouse"])->name('housedetail');
+
+Route::post('/chat/{id}',[HouseController::class,"chatOfHouse"])->name('chateHouse');
+Route::get('/chat/{id}/delete/{chatId}',[HouseController::class,"deleteChat"])->name('deleteChat');
 
 
 

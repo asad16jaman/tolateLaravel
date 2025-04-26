@@ -67,78 +67,25 @@
   <div class="card mb-4 border-0 shadow" >
 
   
-      <div class="row g-0 p-3 align-items-center">
-            <div class="col-md-5 md-lg-0 md-md-0 mb-3">
-              <img src="{{ asset('assets/rooms/IMG_42663.png') }}" class="img-fluid rounded-start" style="height: 200px; width: 100%; border-radius: 3px;" alt="...">
-            </div>
-            <div class="col-md-5 px-lg-3 px-md-3 px-0">
-             <h5>Luxary Room</h5>
-             <div class="features mb-3">
-                            <h6 class="mb-3" >Features</h6>
-                            <span class="badge bg-light text-dark  text-warp ">
-                                2 Rooms
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               1 Bathrooms
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               1 Balcony
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               3 sofa
-                              </span>
-                        </div>
-                        <div class="facilities mb-3">
-                            <h6 class="mb-1" >Facilities</h6>
-                            <span class="badge bg-light text-dark  text-warp ">
-                                  wifi
-                                  </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                            Televition
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               AC
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               Room Heater
-                              </span>
-
-                        </div>
-                        <div class="guests">
-                        <h6 class="mb-1" >Guests</h6>
-                        <span class="badge bg-light text-dark  text-warp ">
-                               5 Adults
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                            4 children
-                              </span>
-                        </div>
-            </div>
-
-            <div class="col-md-2 text-center">
-              <h6 class="mb-4" >৳111 per night</h6>
-              <!-- <a href="room.html" class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">Book Now</a> -->
-              <a href="{{ route('housedetail') }}" class="btn btn-sm w-100 btn-outline-dark shadow-none ">More Details</a>
-        </div>
-    </div>
-
+      
+    @forelse ($houses as $house)
 
     <div class="row g-0 p-3 align-items-center">
             <div class="col-md-5 md-lg-0 md-md-0 mb-3">
               <img src="{{ asset('assets/rooms/IMG_42663.png') }}" class="img-fluid rounded-start" style="height: 200px; width: 100%; border-radius: 3px;" alt="...">
             </div>
             <div class="col-md-5 px-lg-3 px-md-3 px-0">
-             <h5>Luxary Room</h5>
+             <h5>{{ $house->name }} ({{ $house->type }})</h5>
              <div class="features mb-3">
                             <h6 class="mb-3" >Features</h6>
                             <span class="badge bg-light text-dark  text-warp ">
-                                2 Rooms
+                                {{ $house->numberOfRooms }} Rooms
                               </span>
                               <span class="badge bg-light text-dark  text-warp ">
-                               1 Bathrooms
+                               {{ $house->numberOfBathRooms }} Bathrooms
                               </span>
                               <span class="badge bg-light text-dark  text-warp ">
-                               1 Balcony
+                               {{ $house->numberOfBalcony }} Balcony
                               </span>
                               <span class="badge bg-light text-dark  text-warp ">
                                3 sofa
@@ -147,147 +94,42 @@
                         <div class="facilities mb-3">
                             <h6 class="mb-1" >Facilities</h6>
                             <span class="badge bg-light text-dark  text-warp ">
-                                  wifi
+                                  {{ $house->gas ? "Gas" : "No Gas" }}
                                   </span>
                               <span class="badge bg-light text-dark  text-warp ">
-                            Televition
+                              {{ $house->internage ? "Wify" : "No Wify" }}
                               </span>
                               <span class="badge bg-light text-dark  text-warp ">
-                               AC
+                              {{ $house->left ? "Left" : "No Left" }}
                               </span>
                               <span class="badge bg-light text-dark  text-warp ">
-                               Room Heater
+                              {{ $house->parking ? "Parking" : "No Parking" }}
                               </span>
 
                         </div>
                         <div class="guests">
-                        <h6 class="mb-1" >Guests</h6>
+                        <h6 class="mb-1" >Loaction</h6>
                         <span class="badge bg-light text-dark  text-warp ">
-                               5 Adults
+                               {{ ucfirst($house->thana) }}
                               </span>
                               <span class="badge bg-light text-dark  text-warp ">
-                            4 children
+                              {{ ucfirst($house->area) }}
                               </span>
                         </div>
             </div>
 
             <div class="col-md-2 text-center">
-              <h6 class="mb-4" >৳111 per night</h6>
-              <!-- <a href="room.html" class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">Book Now</a> -->
-              <a href="{{ route('housedetail') }}" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
+              <h6 class="mb-4" >৳{{ $house->price }} Per Month</h6>
+              <a href="{{ route('housedetail',['id'=>$house->id]) }}" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
         </div>
     </div>
 
-    <div class="row g-0 p-3 align-items-center">
-            <div class="col-md-5 md-lg-0 md-md-0 mb-3">
-              <img src="{{ asset('assets/rooms/IMG_42663.png') }}" class="img-fluid rounded-start" style="height: 200px; width: 100%; border-radius: 3px;" alt="...">
-            </div>
-            <div class="col-md-5 px-lg-3 px-md-3 px-0">
-             <h5>Luxary Room</h5>
-             <div class="features mb-3">
-                            <h6 class="mb-3" >Features</h6>
-                            <span class="badge bg-light text-dark  text-warp ">
-                                2 Rooms
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               1 Bathrooms
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               1 Balcony
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               3 sofa
-                              </span>
-                        </div>
-                        <div class="facilities mb-3">
-                            <h6 class="mb-1" >Facilities</h6>
-                            <span class="badge bg-light text-dark  text-warp ">
-                                  wifi
-                                  </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                            Televition
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               AC
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               Room Heater
-                              </span>
+    
+    @empty
+      <p>there is no house...</p>
+    @endforelse
 
-                        </div>
-                        <div class="guests">
-                        <h6 class="mb-1" >Guests</h6>
-                        <span class="badge bg-light text-dark  text-warp ">
-                               5 Adults
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                            4 children
-                              </span>
-                        </div>
-            </div>
-
-            <div class="col-md-2 text-center">
-              <h6 class="mb-4" >৳111 per night</h6>
-              <!-- <a href="room.html" class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">Book Now</a> -->
-              <a href="{{ route('housedetail') }}" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
-        </div>
-    </div>
-
-    <div class="row g-0 p-3 align-items-center">
-            <div class="col-md-5 md-lg-0 md-md-0 mb-3">
-              <img src="{{ asset('assets/rooms/IMG_42663.png') }}" class="img-fluid rounded-start" style="height: 200px; width: 100%; border-radius: 3px;" alt="...">
-            </div>
-            <div class="col-md-5 px-lg-3 px-md-3 px-0">
-             <h5>Luxary Room</h5>
-             <div class="features mb-3">
-                            <h6 class="mb-3" >Features</h6>
-                            <span class="badge bg-light text-dark  text-warp ">
-                                2 Rooms
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               1 Bathrooms
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               1 Balcony
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               3 sofa
-                              </span>
-                        </div>
-                        <div class="facilities mb-3">
-                            <h6 class="mb-1" >Facilities</h6>
-                            <span class="badge bg-light text-dark  text-warp ">
-                                  wifi
-                                  </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                            Televition
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               AC
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                               Room Heater
-                              </span>
-
-                        </div>
-                        <div class="guests">
-                        <h6 class="mb-1" >Guests</h6>
-                        <span class="badge bg-light text-dark  text-warp ">
-                               5 Adults
-                              </span>
-                              <span class="badge bg-light text-dark  text-warp ">
-                            4 children
-                              </span>
-                        </div>
-            </div>
-
-            <div class="col-md-2 text-center">
-              <h6 class="mb-4" >৳111 per night</h6>
-              <!-- <a href="room.html" class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">Book Now</a> -->
-              <a href="{{ route('housedetail') }}" class="btn btn-sm w-100 btn-outline-dark shadow-none">More Details</a>
-        </div>
-    </div>
-
+    
 
 
 
