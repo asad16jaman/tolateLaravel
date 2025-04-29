@@ -37,6 +37,15 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4 col-12">
                                     <div class="mb-3">
+                                        <label for="">Name</label>
+                                        <input type="text" name="name" id="" value="{{ old('name') }}" class="form-control">
+                                        @error('name')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 col-12">
+                                    <div class="mb-3">
                                         <label for="">Rant/Month</label>
                                         <input type="text" name="price" id="" value="{{ old('price') }}" class="form-control">
                                         @error('price')
@@ -128,9 +137,9 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-lg-4 col-12">
+                                <!-- <div class="col-md-6 col-lg-4 col-12">
                                     
-                                </div>
+                                </div> -->
 
                                 <div class="col-md-4 col-lg-4 col-6">
                                     <div class="mb-3">

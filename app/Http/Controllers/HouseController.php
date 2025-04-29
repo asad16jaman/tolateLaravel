@@ -58,10 +58,10 @@ class HouseController extends Controller
 
     public function getHouse(int $id){
 
-        $house = House::with(['user','user.profile'])->find($id);
+        $house = House::with(['user','user.profile','gallery'])->find($id);
         $chats = Chat::with('user')->where('house_id',$id)->orderBy('id','desc')->get();
 
-        // return response()->json($chats);
+        // return response()->json($house);
         
         return view('house.house',["house"=>$house,'chats'=>$chats]);
     }

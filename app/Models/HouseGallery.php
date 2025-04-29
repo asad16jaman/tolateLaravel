@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class HouseGallery extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+    
 }

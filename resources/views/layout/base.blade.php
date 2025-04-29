@@ -31,9 +31,12 @@
       </div>
       <div class="modal-body">
         If you have any house to give rent.click Yes button bellow and give house detail.
+        <div class="d-flex justify-content-end">
+          <a href="{{ route('home.changeType') }}" class="btn btn-secondary">Yes</a>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button> -->
       </div>
     </div>
   </div>

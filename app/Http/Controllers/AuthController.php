@@ -42,10 +42,11 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
-
         if(Auth::attempt(['email' => $request->email,'password' => $request->password],$request->remembar?true:false)){
             $request->session()->regenerate();
-            return redirect()->intended('/prorile');
+
+            
+            return to_route('home');
         }
         return back()->with('error','credintial not match');
        
@@ -107,8 +108,6 @@ class AuthController extends Controller
     }
 
 
-
-
     public function logout(Request $request){
         Auth::logout();
  
@@ -116,8 +115,24 @@ class AuthController extends Controller
         
             $request->session()->regenerateToken();
         
-            return back();
+            // return back();
+            return to_route('login');
     }
 
     //end of function
+
+
+    function changeUserType(){
+
+        $user= User::find(auth()->user()->id);
+
+        if($user){
+
+           User::where('id','=',auth()->user()->id)->update([
+            'role' => 'owner'
+           ]);
+        }
+        return to_route('profile');
+    }
+
 }

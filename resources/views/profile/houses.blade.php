@@ -64,12 +64,14 @@
        
       </div>
       <div class="d-flex justify-content-end m-3">
-            <button class="btn btn-danger ">Delete</button>
+            <a href="{{ route("profile.gallery.create",['houseId'=>$house->id]) }}" class="btn btn-primary mx-3">Add House Gallery</a>
+            <a href="{{ route('profile.house.delete',['id'=> $house->id]) }}" class="btn btn-danger ">Delete</a>
         </div>
     </div>
     
   </div>
 </div>
+
 
 @empty
 

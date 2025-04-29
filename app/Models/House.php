@@ -16,6 +16,10 @@ class House extends Model
         return $this->belongsTo(User::class);
     }
 
+    function gallery(){
+        return $this->hasMany(HouseGallery::class);
+    }
+
 
 
 }

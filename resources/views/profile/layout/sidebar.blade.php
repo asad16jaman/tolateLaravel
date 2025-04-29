@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
       <img src="{{ asset('school/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">EduTech Academy</span>
+      <span class="brand-text font-weight-light">To-Lete</span>
     </a>
 
     <!-- Sidebar -->
@@ -73,13 +73,13 @@
 
               <li class="nav-item">
                 <a href="" class="nav-link">
-                <i class="fa-solid fa-key"></i>
-                  <p>Change Password</p>
+                <i class="fa-solid fa-message"></i>
+                  <p>Feed Back</p>
                 </a>
               </li>
               
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('logout') }}" class="nav-link">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                   <p>Logout</p>
                 </a>

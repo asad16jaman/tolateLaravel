@@ -46,24 +46,24 @@
 
    
       
+    @forelse($family as $fml)
 
-
-      <div class="col-lg-4 col-md-6 my-3">
+    <div class="col-lg-4 col-md-6 my-3">
         <div class="card border-0 shadow" style="max-width: 350px; margin : auto;">
-          <img src="{{ asset('assets/rooms/1.jpg') }}" class="card-img-top" alt="...">
+          <img src="{{ asset('storage')."/".$fml->thum }}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5>simple room name</h5>
-            <h6 class="mb-4">৳ 2000 per night</h6>
+            <h5>{{ $fml->name." ($fml->type)*" }}</h5>
+            <h6 class="mb-4">৳ {{ $fml->price }} per Month</h6>
             <div class="features mb-4">
               <h6 class="mb-1">Features</h6>
               <span class="badge bg-light text-dark  text-warp ">
-                2 Rooms
+                {{ $fml->numberOfRooms }} Rooms
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                1 Bathrooms
+                {{ $fml->numberOfBathRooms }} Bathrooms
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                1 Balcony
+                {{ $fml->numberOfBalcony }} Balcony
               </span>
               <span class="badge bg-light text-dark  text-warp ">
                 3 sofa
@@ -72,36 +72,37 @@
             <div class="facilities mb-4">
               <h6 class="mb-1">Facilities</h6>
               <span class="badge bg-light text-dark  text-warp ">
-                wifi
+                {{ $fml->internate ? "Wify" : "No Wify" }}
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                Televition
+                {{ $fml->gas ? "Gas" : "No Gas" }}
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                AC
+                {{ $fml->left ? "Left" : "No Left" }}
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                Room Heater
+                {{ $fml->parking ? "Parking" : "" }}
               </span>
 
             </div>
             <div class="guests mb-4">
-              <h6 class="mb-1">Guests</h6>
+              <h6 class="mb-1">Location</h6>
               <span class="badge bg-light text-dark  text-warp ">
-                5 Adults
+                {{ $fml->district }}
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                4 children
+              {{ $fml->thana }}
+              </span>
+
+              <span class="badge bg-light text-dark  text-warp ">
+              {{ $fml->area }}
               </span>
             </div>
             <div class="rating mb-4">
-              <h6 class="mb-1">Rating</h6>
-              <span class="badge rounded-pill bg-light">
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-              </span>
+              <h6 class="mb-1">Available From</h6>
+              <p>
+              {{ date('jS M, Y', strtotime($fml->availableFrom)) }}
+              </p>
 
 
 
@@ -110,153 +111,16 @@
             </div>
             <div class="d-flex justify-content-evenly mb-2">
               <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
-              <a href="{{ route('houses.index') }}" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-3">
-        <div class="card border-0 shadow" style="max-width: 350px; margin : auto;">
-          <img src="{{ asset('assets/rooms/1.jpg') }}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5>simple room name</h5>
-            <h6 class="mb-4">৳ 2000 per night</h6>
-            <div class="features mb-4">
-              <h6 class="mb-1">Features</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                2 Rooms
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                1 Bathrooms
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                1 Balcony
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                3 sofa
-              </span>
-            </div>
-            <div class="facilities mb-4">
-              <h6 class="mb-1">Facilities</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                wifi
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                Televition
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                AC
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                Room Heater
-              </span>
-
-            </div>
-
-            <div class="guests mb-4">
-              <h6 class="mb-1">Guests</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                5 Adults
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                4 children
-              </span>
-            </div>
-            <div class="rating mb-4">
-              <h6 class="mb-1">Rating</h6>
-              <span class="badge rounded-pill bg-light">
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-              </span>
-
-
-
-
-
-            </div>
-            <div class="d-flex justify-content-evenly mb-2">
-              <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
-              <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
+              <a href="{{ route('housedetail',['id'=>$fml->id]) }}" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
             </div>
 
           </div>
         </div>
       </div>
 
-      <div class="col-lg-4 col-md-6 my-3">
-        <div class="card border-0 shadow" style="max-width: 350px; margin : auto;">
-          <img src="{{ asset('assets/rooms/1.jpg') }}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5>simple room name</h5>
-            <h6 class="mb-4">৳ 2000 per night</h6>
-            <div class="features mb-4">
-              <h6 class="mb-1">Features</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                2 Rooms
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                1 Bathrooms
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                1 Balcony
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                3 sofa
-              </span>
-            </div>
-            <div class="facilities mb-4">
-              <h6 class="mb-1">Facilities</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                wifi
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                Televition
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                AC
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                Room Heater
-              </span>
-
-            </div>
-
-            <div class="guests mb-4">
-              <h6 class="mb-1">Guests</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                5 Adults
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                4 children
-              </span>
-            </div>
-            <div class="rating mb-4">
-              <h6 class="mb-1">Rating</h6>
-              <span class="badge rounded-pill bg-light">
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-              </span>
-
-
-
-
-
-            </div>
-            <div class="d-flex justify-content-evenly mb-2">
-              <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
-              <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
+    @empty
+      <p>No House ..</p>
+    @endforelse
       <div class="col-lg-12 text-center mt-5">
         <a href="{{ route('houses.index') }}" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Rooms>>></a>
 
@@ -269,26 +133,25 @@
   <div class="container">
     <div class="row">
 
-   
-      
 
+    @forelse($bachelor as $fml)
 
-      <div class="col-lg-4 col-md-6 my-3">
+    <div class="col-lg-4 col-md-6 my-3">
         <div class="card border-0 shadow" style="max-width: 350px; margin : auto;">
-          <img src="{{ asset('assets/rooms/1.jpg') }}" class="card-img-top" alt="...">
+          <img src="{{ asset('storage')."/".$fml->thum }}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5>simple room name</h5>
-            <h6 class="mb-4">৳ 2000 per night</h6>
+            <h5>{{ $fml->name." ($fml->type)*" }}</h5>
+            <h6 class="mb-4">৳ {{ $fml->price }} per Month</h6>
             <div class="features mb-4">
               <h6 class="mb-1">Features</h6>
               <span class="badge bg-light text-dark  text-warp ">
-                2 Rooms
+                {{ $fml->numberOfRooms }} Rooms
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                1 Bathrooms
+                {{ $fml->numberOfBathRooms }} Bathrooms
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                1 Balcony
+                {{ $fml->numberOfBalcony }} Balcony
               </span>
               <span class="badge bg-light text-dark  text-warp ">
                 3 sofa
@@ -297,36 +160,37 @@
             <div class="facilities mb-4">
               <h6 class="mb-1">Facilities</h6>
               <span class="badge bg-light text-dark  text-warp ">
-                wifi
+                {{ $fml->internate ? "Wify" : "No Wify" }}
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                Televition
+                {{ $fml->gas ? "Gas" : "No Gas" }}
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                AC
+                {{ $fml->left ? "Left" : "No Left" }}
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                Room Heater
+                {{ $fml->parking ? "Parking" : "" }}
               </span>
 
             </div>
             <div class="guests mb-4">
-              <h6 class="mb-1">Guests</h6>
+              <h6 class="mb-1">Location</h6>
               <span class="badge bg-light text-dark  text-warp ">
-                5 Adults
+                {{ $fml->district }}
               </span>
               <span class="badge bg-light text-dark  text-warp ">
-                4 children
+              {{ $fml->thana }}
+              </span>
+
+              <span class="badge bg-light text-dark  text-warp ">
+              {{ $fml->area }}
               </span>
             </div>
             <div class="rating mb-4">
-              <h6 class="mb-1">Rating</h6>
-              <span class="badge rounded-pill bg-light">
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-              </span>
+              <h6 class="mb-1">Available From</h6>
+              <p>
+              {{ date('jS M, Y', strtotime($fml->availableFrom)) }}
+              </p>
 
 
 
@@ -335,153 +199,16 @@
             </div>
             <div class="d-flex justify-content-evenly mb-2">
               <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
-              <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-3">
-        <div class="card border-0 shadow" style="max-width: 350px; margin : auto;">
-          <img src="{{ asset('assets/rooms/1.jpg') }}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5>simple room name</h5>
-            <h6 class="mb-4">৳ 2000 per night</h6>
-            <div class="features mb-4">
-              <h6 class="mb-1">Features</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                2 Rooms
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                1 Bathrooms
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                1 Balcony
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                3 sofa
-              </span>
-            </div>
-            <div class="facilities mb-4">
-              <h6 class="mb-1">Facilities</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                wifi
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                Televition
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                AC
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                Room Heater
-              </span>
-
-            </div>
-
-            <div class="guests mb-4">
-              <h6 class="mb-1">Guests</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                5 Adults
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                4 children
-              </span>
-            </div>
-            <div class="rating mb-4">
-              <h6 class="mb-1">Rating</h6>
-              <span class="badge rounded-pill bg-light">
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-              </span>
-
-
-
-
-
-            </div>
-            <div class="d-flex justify-content-evenly mb-2">
-              <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
-              <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
+              <a href="{{ route('housedetail',['id'=>$fml->id]) }}" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
             </div>
 
           </div>
         </div>
       </div>
 
-      <div class="col-lg-4 col-md-6 my-3">
-        <div class="card border-0 shadow" style="max-width: 350px; margin : auto;">
-          <img src="{{ asset('assets/rooms/1.jpg') }}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5>simple room name</h5>
-            <h6 class="mb-4">৳ 2000 per night</h6>
-            <div class="features mb-4">
-              <h6 class="mb-1">Features</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                2 Rooms
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                1 Bathrooms
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                1 Balcony
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                3 sofa
-              </span>
-            </div>
-            <div class="facilities mb-4">
-              <h6 class="mb-1">Facilities</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                wifi
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                Televition
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                AC
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                Room Heater
-              </span>
-
-            </div>
-
-            <div class="guests mb-4">
-              <h6 class="mb-1">Guests</h6>
-              <span class="badge bg-light text-dark  text-warp ">
-                5 Adults
-              </span>
-              <span class="badge bg-light text-dark  text-warp ">
-                4 children
-              </span>
-            </div>
-            <div class="rating mb-4">
-              <h6 class="mb-1">Rating</h6>
-              <span class="badge rounded-pill bg-light">
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-              </span>
-
-
-
-
-
-            </div>
-            <div class="d-flex justify-content-evenly mb-2">
-              <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
-              <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
+    @empty
+      <p>No House ..</p>
+    @endforelse
       <div class="col-lg-12 text-center mt-5">
         <a href="{{ route('houses.index') }}" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Rooms>>></a>
 

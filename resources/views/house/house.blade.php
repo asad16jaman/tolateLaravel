@@ -123,40 +123,91 @@
 
 
     <div class="container mt-3">
+       
         <div class="row">
-
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div id="roomCarousel">
                     <div class="card shadow-sm">
-                        <img src="{{ asset('assets/rooms/IMG_42663.png') }}" style="border-radius: 0.375rem;"
-                            class="card-img-top room-image" alt="Simple Room">
-                        <!-- <div class="card-body"> -->
-                        <!-- <h5 class="card-title">Simple Room</h5> -->
-                        <!-- <p class="card-text text-muted">₹300 per night</p> -->
-                        <!-- </div> -->
+
+                        
+
+                            @if($house->gallery)
+
+                            
+                            <div>
+                            <div id="carouselExampleControls" class="carousel slide bg-danger w-100" style="height: 400px; overflow: hidden;" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    @foreach ($house->gallery as $pictur)
+                                            @if($loop->first)
+                                            <div class="carousel-item active">
+                                            <img src="{{ asset('storage').'/'.$pictur->image }}" class="img-fluid" alt="...">
+                                            </div>
+                                            @else
+                                            <di class="carousel-item">
+                                            <img src="{{ asset('storage').'/'.$pictur->image }}" class="img-fluid" alt="...">
+                                            </div>
+                                            @endif
+                                    
+                                                
+                                        @endforeach
+                                </div>
+                                <div class="contorlbtn">
+                                <button class="carousel-control-prev " style="margin-left: 100px;" type="button" data-bs-target="#carouselExampleControls"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon text-light" aria-hidden="true"></span>
+                                <!-- <span class="">Previous</span> -->
+                            </button>
+                            <button class="carousel-control-next" style="margin-right: 100px;" type="button" data-bs-target="#carouselExampleControls"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon text-light" aria-hidden="true"></span>
+                                <!-- <span class="">Next</span> -->
+                                </div>
+                            </button>
+                            </div>
+                            </div>
+
+                        @else
+
+                        <img src="{{ asset('storage').'/'.$house->thum }}" style="border-radius: 0.375rem;"
+                                class="card-img-top room-image" alt="Simple Room">
+                        @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </div>
 
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card p-4">
-                    <h3 class="mb-3">৳{{ $house->price }} per Month</h3>
-                    <p class="text-warning mb-2">
-                        Available From :
-                    </p>
-                    <p>
-                        {{ date('jS M, Y', strtotime($house->availableFrom)) }}
-                    </p>
-
-
-                    <button class="btn btn-book btn-lg w-100 mt-2">
-                        Bellow Message To House Owener
-                    </button>
-                </div>
-            </div>
-
-            <div class="col-md-12 mt-3">
+            
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-8">
                 <div class="card p-4">
 
                     <h5>Description</h5>
@@ -185,48 +236,66 @@
                 </div>
             </div>
 
+            <div class="col-md-3">
+                <div class="card p-4">
+                    <h3 class="mb-3">৳{{ $house->price }} per Month</h3>
+                    <p class="text-warning mb-2">
+                        Available From :
+                    </p>
+                    <p>
+                        {{ date('jS M, Y', strtotime($house->availableFrom)) }}
+                    </p>
+
+
+                    <button class="btn btn-book btn-lg w-100 mt-2">
+                        Bellow Message To House Owener
+                    </button>
+                </div>
+            </div>
+
             <div class="row mt-5">
                 <div class="card">
                     <div class="card-header">
                         @auth
-                        <form action="{{ route('chateHouse', ['id' => $house->id]) }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-6 offset-md-3">
-                                    <div class="">
-                                        <textarea name="message" placeholder="Chat with house owener"
-                                            class="form-control @error('message') is-invalid @enderror"
-                                            id="">{{ old('message') }}</textarea>
+                            <form action="{{ route('chateHouse', ['id' => $house->id]) }}" method="post">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6 offset-md-3">
+                                        <div class="">
+                                            <textarea name="message" placeholder="Chat with house owener"
+                                                class="form-control @error('message') is-invalid @enderror"
+                                                id="">{{ old('message') }}</textarea>
 
-                                        @error('message')
-                                            <div class="alert">{{ $message }}</div>
-                                        @enderror
+                                            @error('message')
+                                                <div class="alert">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <input type="submit" value="submit" class="btn btn-primary mt-1">
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-end">
-                                        <input type="submit" value="submit" class="btn btn-primary mt-1">
-                                    </div>
+
                                 </div>
-
-                            </div>
-                        </form>
+                            </form>
                         @else
                             <p>You Need To Logged In To Message</p>
                         @endauth
                     </div>
                     <div class="card-body">
-                       
+
                         @forelse($chats as $chat)
                             <div class="card p-3 my-3">
                                 <p>{{ $chat->user->email }}</p>
                                 <small>{{ $chat->message }}</small>
                                 @auth
                                     @if(auth()->user()->id == $chat->user->id)
-                                    <div class="d-flex justify-content-end">
-                                        <a href="{{ route('deleteChat',['id' => $house->id,'chatId'=>$chat->id]) }}" class="btn btn-danger">Delete Chat</a>
-                                    </div>
+                                        <div class="d-flex justify-content-end">
+                                            <a href="{{ route('deleteChat', ['id' => $house->id, 'chatId' => $chat->id]) }}"
+                                                class="btn btn-danger">Delete Chat</a>
+                                        </div>
                                     @endif
                                 @endauth
-                                
+
                             </div>
                         @empty
                             <p>there is no chats</p>

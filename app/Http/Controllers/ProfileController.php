@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreHouseRequest;
 use App\Models\House;
+use App\Models\HouseGallery;
 use App\Models\Profile;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,9 +30,7 @@ class ProfileController extends Controller
     }
 
     function showHouse(){
-
         $myHouses = House::where('user_id',auth()->user()->id)->get();
-
         return view('profile.houses',["myHouses" => $myHouses]);
     }
 
@@ -79,41 +78,70 @@ class ProfileController extends Controller
         }
     
 
-        return response()->json($newar);
+        return to_route('profile.house');
     }
 
 
     function  deleteHouse($id){
 
         $house = House::findOrFail($id);
+        $gallaries = HouseGallery::where('house_id',"=",$id)->get();
 
          try{
 
-            //delete thumnail house image
+            //delete gallry image;
+            foreach($gallaries as $galry){
+                    if(file_exists(storage_path().'/app/public/'.$galry->image)){
+                        unlink(storage_path().'/app/public/'.$galry->image);
+                    } 
+            }
+           // delete thumnail house image
             if($house->thum){            
                 if(file_exists(storage_path().'/app/public/'.$house->thum)){
                     unlink(storage_path().'/app/public/'.$house->thum);
                 }  
             }
 
+            HouseGallery::where('house_id',"=",$id)->delete();
             $house->delete();
 
-            return redirect()->route("");
+            return redirect()->route("profile.house");
 
         } catch (Exception $err){
 
-            return response()->json([
-                'error' => true,
-                'message' => $err->getMessage()
-            ], 500);
+            return response()->route('profile.house');
 
         }
 
-        
-
-
     }
 
+    function createGallry(int $houseId){
+
+        return view('profile.gallery',['houseId'=>$houseId]);
+    }
+
+    function gallerystore(Request $request,int $houseId){
+
+        $request->validate([
+            'pictures' => ['required', 'array', 'max:10',"min:3"],
+            'pictures.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ]);
+
+        foreach($request->file('pictures') as $pictur){
+
+            $newName = $pictur->store(
+                'gallery', 'public'
+            );
+
+            HouseGallery::create([
+                'house_id' => $houseId,
+                'image' => $newName
+            ]);
+
+        }
+
+        return to_route('profile.house');
+    }
 
 
 

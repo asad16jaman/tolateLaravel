@@ -5,6 +5,7 @@ use App\Http\Controllers\HouseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use Symfony\Component\Routing\Loader\Configurator\Traits\RouteTrait;
 
 
 /*
@@ -59,13 +60,21 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 
-
     //-------------------------
     Route::get("/profile", [ProfileController::class,'index'])->name('profile');
     Route::post("/profile", [ProfileController::class,'updateProfile'])->name('profile');
     Route::get("profile/houses/", [ProfileController::class,'showHouse'])->name('profile.house');
     Route::get("profile/house/create", [ProfileController::class,'contact'])->name('profile.house.create');
     Route::post("profile/house/create", [ProfileController::class,'houseStore'])->name('profile.house.store');
+    Route::get("profile/house/{id}/delete", [ProfileController::class,'deleteHouse'])->name('profile.house.delete');
+    
+    Route::get("/changetype", [AuthController::class,'changeUserType'])->name('home.changeType');
+
+
+    //gallery...
+
+    Route::get('/profile/{houseId}/gallery',[ProfileController::class,'createGallry'])->name('profile.gallery.create');
+    Route::post('/profile/{houseId}/gallery',[ProfileController::class,'gallerystore'])->name('profile.gallery.store');
 
 });
 
